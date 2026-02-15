@@ -3,8 +3,8 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/reactHW02/',
-  // base: process.env.NODE_ENV === 'production' ? '/reactHW02/' : '/',
+
+  base: process.env.NODE_ENV === 'production' ? '/reactHW02/' : '/',
   plugins: [react()],
   css: {
     preprocessorOptions: {
