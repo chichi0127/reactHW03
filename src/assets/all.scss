@@ -27,3 +27,9 @@
     background-size: cover; // 關鍵！圖片縮放以填滿容器
     background-repeat: no-repeat;
 }
+
+.bg-color {
+    background-image:
+        radial-gradient(at 0% 0%, #000000 0px, transparent 110%),
+        radial-gradient(at 70% 80%, #dd9faf 0px, transparent 90%);
+}
