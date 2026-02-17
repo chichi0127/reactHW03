@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
 
-  base: process.env.NODE_ENV === 'production' ? '/reactHW02/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/reactHW03/' : '/',
   plugins: [react()],
   css: {
     preprocessorOptions: {
