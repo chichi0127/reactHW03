@@ -13,7 +13,6 @@ export default function Login() {
 
     const handlePass = (e) => {
         setPassword(e.target.value);
-
     }
 
     const handleUser = (e) => {
