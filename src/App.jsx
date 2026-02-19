@@ -4,8 +4,7 @@ import axios from 'axios';
 
 const apiPath = "https://ec-course-api.hexschool.io/v2/api/";
 
-const BPtoken = document.cookie
-  .replace(/(?:(?:^|.*;\s*)BPToken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
 
 
 
@@ -254,6 +253,9 @@ function App() {
 
 
   const getData = async () => {
+    const BPtoken = document.cookie
+      .replace(/(?:(?:^|.*;\s*)BPToken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
     axios.get(`${apiPath}hahablackpink/admin/products`, {
       headers: {
         Authorization: BPtoken
@@ -264,7 +266,8 @@ function App() {
         setProducts(res.data.products);
       })
       .catch((error) => {
-        console.error("取得資料時發生錯誤:", error);
+        console.error("取得資料時發生錯誤:", error.response
+          .data);
       });
   };
 
