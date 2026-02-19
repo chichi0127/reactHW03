@@ -246,10 +246,6 @@ function App() {
       ...addProduct,
       imagesUrl: newImages
     });
-    return (
-      <>
-      </>
-    )
   };
 
 
