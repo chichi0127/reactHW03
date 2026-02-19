@@ -67,7 +67,6 @@ function Modal({ revisedProduct, deleteProduct, product, onClose }) {
 
 
   if (!product) return null;
-  console.log(revisedModal.is_enabled);
 
   return (
 
@@ -254,7 +253,6 @@ function App() {
   };
 
 
-
   const getData = async () => {
 
 
@@ -264,7 +262,7 @@ function App() {
           Authorization: BPtoken
         }
       });
-      console.log("取得資料:", res);
+      console.log("取得資料:", res.data);
       setProducts(res.data.products);
 
     } catch (error) {
@@ -276,64 +274,59 @@ function App() {
   };
 
   const sentProduct = async () => {
-    axios.post(`${apiBase}v2/api/${apiPath}/admin/product`, { data: addProduct }, {
-      headers: {
-        Authorization: BPtoken
-      }
-    })
-      .then((res) => {
-        console.log("新增資料:", res.data);
-        setShowAddModal(false); // 關閉視窗
 
-        getData(); // 重新整理列表
-      })
-      .catch((error) => {
-        console.error("新增資料時發生錯誤:", error);
+    try {
+      const res = await axios.post(`${apiBase}v2/api/${apiPath}/admin/product`, { data: addProduct }, {
+        headers: {
+          Authorization: BPtoken
+        }
       });
+      console.log("新增資料:", res.data.message);
+      setShowAddModal(false); // 關閉視窗
+      getData(); // 重新整理列表
+
+    } catch (error) {
+      console.error("新增資料時發生錯誤:", error.response);
+    }
+
 
   };
 
   const deleteProduct = async (id) => {
-    axios.delete(`${apiBase}v2/api/${apiPath}/admin/product/${id}`, {
-      headers: {
-        Authorization: BPtoken
-      }
-    })
-      .then((res) => {
-        console.log("刪除資料:", res);
-        setSelectProduct(null); // 關閉視窗
-        getData(); // 重新整理列表
-      })
-      .catch((error) => {
-        console.error("刪除資料時發生錯誤:", error);
+
+    try {
+      const res = await axios.delete(`${apiBase}v2/api/${apiPath}/admin/product/${id}`, {
+        headers: {
+          Authorization: BPtoken
+        }
       });
+      console.log("刪除資料:", res.data.message);
+      setSelectProduct(null); // 關閉視窗
+      getData(); // 重新整理列表
+
+    } catch (error) {
+      console.error("刪除資料時發生錯誤:", error.response);
+    }
 
   };
 
   const revisedProduct = async (id, revisedModal) => {
-    axios.put(`${apiBase}v2/api/${apiPath}/admin/product/${id}`, { data: revisedModal }, {
-      headers: {
-        Authorization: BPtoken
-      }
-    })
-      .then((res) => {
-        console.log("修改資料:", res.data);
-        setSelectProduct(null)
-        // setShowRevisedModal(false); // 關閉視窗
-        getData(); // 重新整理列表
-      })
-      .catch((error) => {
-        console.error("修改資料時發生錯誤:", error);
+
+    try {
+      const res = await axios.put(`${apiBase}v2/api/${apiPath}/admin/product/${id}`, { data: revisedModal }, {
+        headers: {
+          Authorization: BPtoken
+        }
       });
+      console.log("修改資料:", res.data);
+      setSelectProduct(null)
+      getData(); // 重新整理列表
+    } catch (error) {
+      console.error("修改資料時發生錯誤:", error.response);
+    }
+
 
   };
-
-
-
-
-
-
-
 
 
   useEffect(() => {
