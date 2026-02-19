@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react'
 import './assets/all.scss'
 import axios from 'axios';
 
-const apiPath = "https://ec-course-api.hexschool.io/v2/api/";
-
-
+const apiBase = import.meta.env.VITE_API_BASE;
+const apiPath = import.meta.env.VITE_API_PATH;
 
 
 
@@ -186,6 +185,10 @@ function Modal({ revisedProduct, deleteProduct, product, onClose }) {
 
 function App() {
 
+
+  const BPtoken = document.cookie
+    .replace(/(?:(?:^|.*;\s*)BPToken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
   const [SelectProduct, setSelectProduct] = useState(null);
 
 
@@ -253,26 +256,27 @@ function App() {
 
 
   const getData = async () => {
-    const BPtoken = document.cookie
-      .replace(/(?:(?:^|.*;\s*)BPToken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 
-    axios.get(`${apiPath}hahablackpink/admin/products`, {
-      headers: {
-        Authorization: BPtoken
-      }
-    })
-      .then((res) => {
-        console.log("取得資料:", res);
-        setProducts(res.data.products);
-      })
-      .catch((error) => {
-        console.error("取得資料時發生錯誤:", error.response
-          .data);
+
+    try {
+      const res = await axios.get(`${apiBase}v2/api/${apiPath}/admin/products`, {
+        headers: {
+          Authorization: BPtoken
+        }
       });
+      console.log("取得資料:", res);
+      setProducts(res.data.products);
+
+    } catch (error) {
+      console.error("取得資料時發生錯誤:", error.response
+        .data);
+    }
+
+
   };
 
   const sentProduct = async () => {
-    axios.post(`${apiPath}hahablackpink/admin/product`, { data: addProduct }, {
+    axios.post(`${apiBase}v2/api/${apiPath}/admin/product`, { data: addProduct }, {
       headers: {
         Authorization: BPtoken
       }
@@ -290,7 +294,7 @@ function App() {
   };
 
   const deleteProduct = async (id) => {
-    axios.delete(`${apiPath}hahablackpink/admin/product/${id}`, {
+    axios.delete(`${apiBase}v2/api/${apiPath}/admin/product/${id}`, {
       headers: {
         Authorization: BPtoken
       }
@@ -307,7 +311,7 @@ function App() {
   };
 
   const revisedProduct = async (id, revisedModal) => {
-    axios.put(`${apiPath}hahablackpink/admin/product/${id}`, { data: revisedModal }, {
+    axios.put(`${apiBase}v2/api/${apiPath}/admin/product/${id}`, { data: revisedModal }, {
       headers: {
         Authorization: BPtoken
       }

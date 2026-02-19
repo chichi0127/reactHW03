@@ -6,8 +6,13 @@ import 'bootstrap'
 import './assets/all.scss'
 import axios from 'axios'
 
+
+const apiBase = import.meta.env.VITE_API_BASE;
+const apiPath = import.meta.env.VITE_API_PATH;
+
+
 function Main() {
-  const apiPath = "https://ec-course-api.hexschool.io/";
+
   const [isAuth, setIsAuth] = useState(false);
   const [BPtoken, setToken] = useState("");
   const [user, setUser] = useState({
@@ -27,7 +32,7 @@ function Main() {
 
   const signIn = async () => {
     try {
-      const res = await axios.post(`${apiPath}v2/admin/signin`, user);
+      const res = await axios.post(`${apiBase}v2/admin/signin`, user);
       const { token, expired } = res.data;
       setToken(token);
 
@@ -59,7 +64,7 @@ function Main() {
 
     const checkLogin = async () => {
       try {
-        const res = await axios.post(`${apiPath}v2/api/user/check`);
+        const res = await axios.post(`${apiBase}v2/api/user/check`);
 
         console.log(res.data);
 
