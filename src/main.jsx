@@ -34,8 +34,6 @@ function Main() {
 
       document.cookie = `BPToken=${token}; expires=${new Date(expired)}; path=/`;
 
-
-
       axios.defaults.headers.common['Authorization'] = token;
 
       setIsAuth(true);
@@ -74,14 +72,6 @@ function Main() {
 
     checkLogin();
 
-    // axios.post(`${apiPath}v2/api/user/check`)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     setIsAuth(true);
-    //   })
-    //   .catch((error) => {
-    //     setIsAuth(false);
-    //   })
 
   }, [])
 
